@@ -45,6 +45,70 @@ ChatBot::~ChatBot()
 //// STUDENT CODE
 ////
 
+ChatBot::ChatBot(const ChatBot& other) {  // 2. copy constructor
+    std::cout<<"copy ChatBot instance at"<< &other<<"to instance at"<<this<<std::endl;
+    //deep copy own data ptr;
+    _image = new wxBitmap(*other._image);
+    // *_image = *other._image;
+    _currentNode = other._currentNode;
+    _rootNode = other._rootNode;
+    _chatLogic = other._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
+
+}
+
+ChatBot& ChatBot::operator=(const ChatBot& other) {  // 3. assign constructor
+    std::cout<<" (assign) ChatBot instance at"<< &other<<"to instance at"<<this<<std::endl;
+    if (this == &other) {
+        return *this;
+    }
+    _image = new wxBitmap();
+    *_image = *other._image;
+    _currentNode = other._currentNode;
+    _rootNode = other._rootNode;
+    _chatLogic = other._chatLogic;
+    return *this;
+}
+
+ChatBot::ChatBot(ChatBot&& other) {  // 4. move constructor
+    std::cout<<"ChatBot moving constructor: move instance at "<< &other<<" to instance at"<<this<<std::endl;
+    //deep copy own data ptr;
+    // if (_image != NULL) {
+    //     delete _image;
+    // }
+    _image = other._image;
+    
+    _currentNode = other._currentNode;
+    _rootNode = other._rootNode;
+    _chatLogic = other._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
+
+    other._image = NULL;
+    other._currentNode = nullptr;
+    other._rootNode = nullptr;
+    other._chatLogic = nullptr;
+}
+
+ChatBot& ChatBot::operator=(ChatBot&& other) {  // 5. move assignment
+    std::cout<<"ChatBot move assignment instance at "<< &other<<" to instance at"<<this<<std::endl;
+    if (this == &other) {
+        return *this;
+    }
+    // if (_image != NULL) {
+    //     delete _image;
+    // }
+    _image = other._image;
+    _currentNode = other._currentNode;
+    _rootNode = other._rootNode;
+    _chatLogic = other._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
+
+    other._image = NULL;
+    other._currentNode = nullptr;
+    other._rootNode = nullptr;
+    other._chatLogic = nullptr;
+    return *this;
+}
 ////
 //// EOF STUDENT CODE
 
